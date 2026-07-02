@@ -39,18 +39,22 @@ public class VeiculoController {
         return ResponseEntity.status(200).body(veiculosDTO);
     }
 
-
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable UUID id){
         this.veiculoService.remover(id);
         return ResponseEntity.noContent().build();
     }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<VeiculoDTO> editar(@PathVariable Long id, @RequestBody VeiculoDTO dto){
-//        return ResponseEntity.ok(this.veiculoService.editar(id, dto));
-//    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<VeiculoDTO> editar(@PathVariable UUID id, @RequestBody VeiculoDTO dto){
+        VeiculoDTO veiculoDTO = this.veiculoService.editar(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(veiculoDTO);
+    }
+
+    @GetMapping("/buscarPorModelo/{modelo}")
+    public ResponseEntity<List<VeiculoDTO>> buscarPorModelo(@PathVariable String modelo){
+        List<VeiculoDTO> veiculosDTO = this.veiculoService.buscarPorModelo(modelo);
+        return ResponseEntity.status(HttpStatus.OK).body(veiculosDTO);
+    }
 
 }
